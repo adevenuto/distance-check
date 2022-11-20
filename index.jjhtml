@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style> 
+    .loading {
+        display: none;
+    }    
+</style>
+<body>
+    <p>Click the button to get your coordinates. <strong class="loading">Loading</strong> </p>
+    
+    <button onclick="getLocation()">Try It</button>
+    <p id="demo"></p>
+
+
+    <script>
+        var x = document.getElementById("demo");
+        var y = document.querySelector(".loading");
+
+        function getLongAndLat() {
+            return new Promise((resolve, reject) =>
+                navigator.geolocation.getCurrentPosition(resolve, reject)
+            );
+        }
+
+
+        const getLocation = async () => {
+            try {
+                y.style.display = "inline-block";
+                let position = await getLongAndLat();
+                showPosition(position);
+                y.style.display = "none";
+            } catch(e) {
+                alert('Error: '+e.message);
+            }
+        }
+
+
+        function showPosition(position) {
+            console.log('hello')
+            x.innerHTML = "Latitude: " + position.coords.latitude + 
+            "<br>Longitude: " + position.coords.longitude;
+        }
+    </script>
+</body>
+</html>
